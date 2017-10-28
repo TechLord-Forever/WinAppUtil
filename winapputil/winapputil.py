@@ -147,10 +147,10 @@ class WinAppUtil(object):
     def get_processes(self):
         """
         Returns a table of all running processes with their pid and
-        filename.
+        filename sorted by pid.
 
         @rtype:  str
-        @return: A table listing all running processes.
+        @return: A table listing all running processes sorted by pid.
         """
 
         system = winappdbg.System()
@@ -166,8 +166,15 @@ class WinAppUtil(object):
 
         table.addRow("----", "----------")
 
+        processes = {}
+
+        # Add all processes to a dictionary to sort them by pid
         for process in system:
-            table.addRow(process.get_pid(), process.get_filename())
+            processes[process.get_pid()] = process.get_filename()
+
+        # Iterate through processes sorted by pid
+        for key in sorted(processes.iterkeys()):
+            table.addRow(key, processes[key])
 
         return table.getOutput()
 
