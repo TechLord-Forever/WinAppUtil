@@ -147,10 +147,10 @@ class WinAppUtil(object):
     def get_processes(self):
         """
         Returns a table of all running processes with their pid and
-        filename sorted by pid.
+        filename.
 
         @rtype:  str
-        @return: A table listing all running processes sorted by pid.
+        @return: A table listing all running processes.
         """
 
         system = winappdbg.System()
@@ -168,7 +168,7 @@ class WinAppUtil(object):
 
         processes = {}
 
-        # Add all processes to a dictionary to sort them by pid
+        # Add all processes to a dictionary then sort them by pid
         for process in system:
             processes[process.get_pid()] = process.get_filename()
 
@@ -254,8 +254,7 @@ class WinAppUtil(object):
             debugger.system.scan()
 
             # Search for all processes with that name
-            rslt = debugger.system.find_processes_by_filename(
-                                                        self.pid_pname)
+            rslt = debugger.system.find_processes_by_filename(self.pid_pname)
 
             if len(rslt) is not 0:
 
@@ -300,15 +299,13 @@ class WinAppUtil(object):
                 _, _ = win32.SearchPath(None, self.pid_pname, ".exe")
 
             # An exception will be raised if file was not found
-            except win32.WindowsError, e:
+            except WindowsError, e:
                 raise DebugError(self.pid_pname, e)
 
         # Either fullpath is passed or file exists in %PATH%
         # In both cases we can just pass it to execv
         debugger = winappdbg.Debug(self.eventhandler,
                                    bKillOnExit=self.kill_on_exit)
-
-        print self.cmdline
 
         debugger.execv(self.cmdline, bFollow=True)
 

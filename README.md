@@ -11,7 +11,7 @@ WinAppDbg is created by Mario Vilas:
 ## Usage
 It's not a proper module yet. Copy the `winapputil` directory to your code and use `import winapputil`.
 
-Until I add more code and usage, look at test04 for good usage.
+Until I add more code and usage, look at test04 for some usage.
 
 ### License:
 Opensourced under the [MIT license](LICENSE).
